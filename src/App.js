@@ -1,5 +1,5 @@
 import React from 'react';
-import Axios from 'axios';
+import axios from 'axios';
 import './App.css';
 
 class App extends React.Component {
@@ -10,15 +10,24 @@ class App extends React.Component {
     }
   }
 
+
+// ********** async/await - handle our asynchronous code **********
+// async is a labeler 
+
+
 // ********** GET CITY DATA **********
 
-handleGetCityData = () => {
+handleGetCityData = async (event) => {
   event.preventDefault();
 
   // TODO: USE AXIOS TO MAKE A CALLOUT TO THE LOCATION API
-  let cityData = axios.get(URL);
+  let cityData = await axios.get(URL);
 
   // TODO: SET THAT DATA INTO STATE
+
+  this.setState({
+    cityData: cityData.data.results
+  });
 
 }
 
@@ -30,6 +39,10 @@ handleGetCityData = () => {
       <form>
         <button type= 'submit' onClick= {this.handleGetCityData}>Cities</button>
       </form>
+
+      <ul>
+        {this.state.cityData.map((cityData, idx) => <li key={idx}>{city.name}</li>)}
+      </ul>
       </>
     )
   }

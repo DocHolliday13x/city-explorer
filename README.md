@@ -15,11 +15,11 @@
 Today I will be creating the react application in which I will be building this project with in the same manner as my gallery of horns project. Generate the files from my terminal using create-react-app city-explorer then importing them to GitHub. After my initial setup is complete (which is being done on a branch named setup rather than on the main), I will create a branch to commence my work on. The order of operations for today is layed out on a Trello board.
 
 * Link to Trello Board: https://trello.com/b/YJhepSUm/city-explorer
-* Name of Feature:
-* Estimate of Time Needed to Complete:
+* Name of Feature: API
+* Estimate of Time Needed to Complete: Not 6 hours
 * Start Time: 1300
-* Finish Time:
-* Actual Time to Completion:
+* Finish Time: 1922 
+* Actual Time to Completion: 6 hours
 
 ## Getting Started
 
@@ -28,6 +28,7 @@ Today I will be creating the react application in which I will be building this 
 ## Change Log
 
 20 March 2023 1400 - Initial Setup Commenced.
+20 March 2023 1922 - Lab 06 Completed
 
 ## Credit and Collaborations
 

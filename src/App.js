@@ -8,16 +8,17 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cityLocationData: [],
+      cityData: {}, // this data comes from axios as an object
       city: '',
       cityLat: '',
-      cityLong: '',
-      cityData: {}, // this data comes from axios as an object
+      cityLong: '', 
       error: false,
       errorMessage: ''
 
     }
   }
+  
+  // ********** GET CITY DATA **********
 
   handleCityInput = async (event) => {
     this.setState({
@@ -29,18 +30,18 @@ class App extends React.Component {
   getCityData = async (event) => {
     event.preventDefault();
     
+    // TODO: USE AXIOS TO GET LOCATION DATA FROM LOCATION IQ -  using city in state
+    let url = `https://us1.locationiq.com/v1/search?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.city}&format=json`
+    
+    let cityDataFromAxios = await axios.get(url);
+    console.log(cityDataFromAxios.data[0]);
+
+    // TODO: SET THAT DATA THAT COMES BACK FROM AXIOS
+    this.setState({
+      cityData: cityDataFromAxios.data[0]
+    })
 
 }
-
-
-  // ********** GET CITY DATA **********
-
-
-  // TODO: USE AXIOS TO GET LOCATION DATA FROM LOCATION IQ -  using city in state
-
-
-  // TODO: SET THAT DATA THAT COMES BACK FROM AXIOS
-
 
 
 render() {
@@ -56,7 +57,7 @@ render() {
 
       {
         this.state.error
-          ? <p>this.state.errorMessage}</p>
+          ? <p>{this.state.errorMessage}</p>
           : Object.keys(this.state.cityData).length > 0 &&
           <ul>
             <p>{this.state.cityData.display_name}</p>

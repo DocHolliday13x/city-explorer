@@ -29,13 +29,6 @@ class App extends React.Component {
   getCityData = async (event) => {
     event.preventDefault();
     
-    try {
-      let url = ''
-
-      let cityDataFromAxios = await axios.get(url);
-      console.log(cityDataFromAxios.data[0]);
-      error: false
-    }
 
 }
 
@@ -48,7 +41,7 @@ class App extends React.Component {
 
   // TODO: SET THAT DATA THAT COMES BACK FROM AXIOS
 
-}
+
 
 render() {
   return (
@@ -69,7 +62,7 @@ render() {
             <p>{this.state.cityData.display_name}</p>
             <p>{this.state.cityData.lat}</p>
             <p>{this.state.cityData.lon}</p>
-            <Image></Image>
+            
           </ul>
       }
 

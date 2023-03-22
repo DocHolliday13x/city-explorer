@@ -2,13 +2,13 @@
 
 * *Author*: Ryan Eastman
 
-* *Version*: 1.0
+* *Version*: 1.0.0
 
 ## Project Overview
 
 * *Description*: City Explorer is a Code Fellows 301 Lab exercise in which we will begin working with NODE.js and APIs.
 
-* *Current State of Development*: Initial Setup
+* *Current State of Development*: Functioning Front-End Application
 
 ## Lab 06
 

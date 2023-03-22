@@ -13,14 +13,14 @@ class App extends React.Component {
       cityData: {}, // this data comes from axios as an object
       city: '',
       cityLat: '',
-      cityLong: '', 
+      cityLong: '',
       weatherData: [],
       error: false,
       errorMessage: ''
 
     }
   }
-  
+
   // ********** GET CITY DATA **********
 
   handleCityInput = async (event) => {
@@ -32,20 +32,21 @@ class App extends React.Component {
   // async is a labeler 
   getCityData = async (event) => {
     // event.preventDefault();
-    
+
     // TODO: USE AXIOS TO GET LOCATION DATA FROM LOCATION IQ -  using city in state
     // try this
     try {
       let url = `https://us1.locationiq.com/v1/search?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.city}&format=json`
-      
+
       let cityDataFromAxios = await axios.get(url);
       // console.log(cityDataFromAxios.data[0]);
-  
+
       // TODO: SET THAT DATA THAT COMES BACK FROM AXIOS
       this.setState({
         cityData: cityDataFromAxios.data[0],
         error: false
       });
+
       // try fails so this takes place
     } catch (error) {
       console.log(error);
@@ -55,60 +56,91 @@ class App extends React.Component {
         errorMessage: error.message
       });
     }
-}
-
-handleSubmit = async (e) => {
-  e.preventDefault();
-
-  // TODO: use axios to hit the api (backend)
-  // TODO: set that info to state
-
-  try {
-    this.getCityData();
-    // http://localhost:3001/weather
-    let url = `${process.env.REACT_APP_SERVER}/weather?city_name=${this.state.city}`
-
-    let weatherDataFromAxios = await axios.get(url);
-
-    this.setState({ // HEY AUDREY THIS IS BROKEN. COMING THROUGH AS AN OBJECT
-      weatherData: weatherDataFromAxios.data
-    })
-
-
-  } catch (error) {
-    console.log(error.message);
   }
 
+
+  handleGetWeather = async (e) => {
+    e.preventDefault();
+    // TODO: use axios to hit the api (backend)
+    // TODO: set that info to state
+
+    try {
+      this.getCityData();
+      // http://localhost:3001/weather
+      let url = `${process.env.REACT_APP_SERVER}/weather?city_name=${this.state.city}`;
+
+      let weatherDataFromAxios = await axios.get(url);
+      // console.log(weatherDataFromAxios.data);
+
+      this.setState({ // HEY AUDREY THIS IS BROKEN. COMING THROUGH AS AN OBJECT
+        weatherData: weatherDataFromAxios.data,
+        error: false
+      },console.log(this.weatherData));
+      
+
+    } catch (error) {
+      console.log(error.message);
+      this.setState({
+        error: true,
+        errorMessage: error.message
+      });
+    }
+
+  }
+
+  // handleGetWeather = async (e) => {
+  //   e.preventDefault();
+
+  //   try {
+
+  //     let url = `${ process.env.REACT_APP_SERVER }/weather?&city_name=${this.state.city}`;
+  //     let weatherDataFromAxios = await axios.get(url);
+  //     // console.log(weatherDataFromAxios.data);
+
+  //     this.setState({
+  //       weatherData: weatherDataFromAxios.data
+  //     },console.log(this.state.weatherData));
+      
+
+  //   } catch (error) {
+  //     console.log('HandleSubmit' + error.message);
+  //     this.setState({
+  //       error: true,
+  //       errorMessage: error.message
+  //     });
+  //   }
+  // }
+
+
+  render() {
+    return (
+      <>
+        <h1>API Calls</h1>
+
+        <Form onSubmit={this.handleGetWeather}>
+          <Form.Label>City Explorer</Form.Label>
+          <Form.Control type="text" placeholder="Enter Location" onChange={this.handleCityInput} />
+          <Button type="submit" variant="secondary">Explore!</Button>
+        </Form>
+
+        {
+          this.state.error
+            ? <p>{this.state.errorMessage}</p>
+            : Object.keys(this.state.cityData).length > 0 &&
+            <ul>
+              <p>{this.state.cityData.display_name}</p>
+              <p>{this.state.cityData.lat}</p>
+              <p>{this.state.cityData.lon}</p>
+              <Weather description={this.state.weatherData} />
+              <Image className="img-fluid" src={`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${this.state.cityData.lat},${this.state.cityData.lon}&zoom=13`} alt='Map of selected location' />
+            </ul>
+        }
+
+      </>
+    )
+  }
 }
 
-render() {
-  return (
-    <>
-      <h1>API Calls</h1>
-
-      <Form onSubmit={this.handleSubmit}>
-        <Form.Label>City Explorer</Form.Label>
-        <Form.Control type="text" placeholder="Enter Location" onChange={this.handleCityInput} />
-        <Button type="submit" variant="secondary">Explore!</Button>
-      </Form>
-
-      {
-        this.state.error
-          ? <p>{this.state.errorMessage}</p>
-          : Object.keys(this.state.cityData).length > 0 &&
-          <ul>
-            <p>{this.state.cityData.display_name}</p>
-            <p>{this.state.cityData.lat}</p>
-            <p>{this.state.cityData.lon}</p>
-            <Weather description={this.state.weatherData}/>
-            <Image className="img-fluid" src= {`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${this.state.cityData.lat},${this.state.cityData.lon}&zoom=13`} alt='Map of selected location'/>
-          </ul>
-      }
-
-    </>
-  )
-}
-}
 
 
 

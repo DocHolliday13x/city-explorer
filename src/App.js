@@ -50,9 +50,9 @@ class App extends React.Component {
       let lon = cityDataFromAxios.data[0].lon;
       this.handleGetWeather(lat, lon);
 
-      let movieTitle = cityDataFromAxios.data.orignial_title;
-      let movieDescription = cityDataFromAxios.data.overview;
-      this.handleGetMovies(movieTitle, movieDescription);
+      // let movieTitle = cityDataFromAxios.data.orignial_title;
+      // let movieDescription = cityDataFromAxios.data.overview;
+      this.handleGetMovies();
 
       // TODO: SET THAT DATA THAT COMES BACK FROM AXIOS
 
@@ -97,11 +97,12 @@ class App extends React.Component {
 
   }
 
-handleGetMovies = async (e) => {
+handleGetMovies = async () => {
   try {
-    let url = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_MOVIEDB_API_KEY}&language=en-US&page=1&include_adult=false`
+    let url = `${process.env.REACT_APP_MOVIEDB_API_KEY}/movies?searchQuery=${this.state.city}`
 
     let moviesDataFromAxios = await axios.get(url);
+    console.log(moviesDataFromAxios.data);
 
     this.setState({
       moviesData: moviesDataFromAxios.data,
@@ -136,7 +137,7 @@ handleGetMovies = async (e) => {
             ? <p>{this.state.errorMessage}</p>
             : Object.keys(this.state.cityData).length > 0 &&
             <ul>
-              <p>{this.state.cityData.display_name}</p>
+              <h2>{this.state.cityData.display_name}</h2>
               <p>{this.state.cityData.lat}</p>
               <p>{this.state.cityData.lon}</p>
               <Weather description={this.state.weatherData} />

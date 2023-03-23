@@ -6,6 +6,7 @@ import Image from 'react-bootstrap/Image';
 import './App.css';
 import Weather from './Weather';
 import Movies from './Movies';
+import LocationCords from './LocationCords';
 
 class App extends React.Component {
   constructor(props) {
@@ -15,6 +16,7 @@ class App extends React.Component {
       city: '',
       weatherData: [],
       moviesData: [],
+      locationData: [],
       error: false,
       errorMessage: '',
     }
@@ -126,8 +128,9 @@ handleGetMovies = async () => {
             : Object.keys(this.state.cityData).length > 0 &&
             <ul>
               <h2>{this.state.cityData.display_name}</h2>
-              <p>{this.state.cityData.lat}</p>
-              <p>{this.state.cityData.lon}</p>
+              <LocationCords
+              cityData={this.state.cityData}
+              />
               <Image className="img-fluid" src={`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${this.state.cityData.lat},${this.state.cityData.lon}&zoom=13`} alt='Map of selected location' />
               <Weather weatherData={this.state.weatherData} />
               <Movies moviesData={this.state.moviesData} />

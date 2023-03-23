@@ -65,7 +65,7 @@ class App extends React.Component {
         errorMessage: error.message
       });
     }
-  }
+  };
 
 
   handleGetWeather = async (cityLat, cityLong) => {
@@ -95,7 +95,7 @@ class App extends React.Component {
       });
     }
 
-  }
+  };
 
 handleGetMovies = async () => {
   try {
@@ -107,16 +107,16 @@ handleGetMovies = async () => {
     this.setState({
       moviesData: moviesDataFromAxios.data,
       error: false,
-    })
+    });
 
-  } catch (error) {
-    console.log(error.message);
-    this.setState({
-      error: true,
-      errorMessage: error.message
-    })
-  }
-}
+    } catch (error) {
+      console.log(error.message);
+      this.setState({
+        error: true,
+        errorMessage: error.message
+      });
+    }
+  };
 
 
 
@@ -149,7 +149,7 @@ handleGetMovies = async () => {
       </>
     )
   }
-}
+};
 
 
 

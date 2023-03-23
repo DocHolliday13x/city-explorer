@@ -1,20 +1,29 @@
 import React from 'react';
+import Card from 'react-bootstrap/Card'
+import Movie from './Movie';
 
 class Movies extends React.Component {
   render() {
     return (
-      <>
-        {this.props.description.map((city, idx) => {
+      <div>
+        {this.props.moviesData.map(movie => {<Movie movie={movie}/>}
           return (
-            <div key= {idx}>
-              <h1>{city.original_title}</h1>
-              <p>{city.overview}</p>
-              <image>{city.poster_path}</image>
-            </div>
+
+            <Card key= {index} style= {{ width: '18rem'}}>
+              <Card.Img variant="top" src={city.poster_path} />
+              <Card.Body>
+
+                <Card.Title>{city.title}</Card.Title>
+                <Card.Text>{city.overview}</Card.Text>
+
+              </Card.Body>
+
+            </Card>
+
           )
         })}
 
-      </>
+      </div>
     )
   }
 }

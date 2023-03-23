@@ -5,7 +5,7 @@ import Form from 'react-bootstrap/Form';
 import Image from 'react-bootstrap/Image';
 import './App.css';
 import Weather from './Weather';
-// import Movies from './Movies';
+import Movies from './Movies';
 
 class App extends React.Component {
   constructor(props) {
@@ -16,9 +16,9 @@ class App extends React.Component {
       // cityLat: '',
       // cityLong: '',
       weatherData: [],
+      moviesData: [],
       error: false,
-      errorMessage: ''
-
+      errorMessage: '',
     }
   }
 
@@ -40,7 +40,7 @@ class App extends React.Component {
       let url = `https://us1.locationiq.com/v1/search?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.city}&format=json`
 
       let cityDataFromAxios = await axios.get(url);
-      console.log(cityDataFromAxios.data[0]);
+      // console.log(cityDataFromAxios.data[0]);
       this.setState({
         cityData: cityDataFromAxios.data[0],
         error: false
@@ -49,6 +49,10 @@ class App extends React.Component {
       let lat = cityDataFromAxios.data[0].lat;
       let lon = cityDataFromAxios.data[0].lon;
       this.handleGetWeather(lat, lon);
+
+      let movieTitle = cityDataFromAxios.data.orignial_title;
+      let movieDescription = cityDataFromAxios.data.overview;
+      this.handleGetMovies(movieTitle, movieDescription);
 
       // TODO: SET THAT DATA THAT COMES BACK FROM AXIOS
 
@@ -72,7 +76,7 @@ class App extends React.Component {
     try {
       // this.getCityData();
       // http://localhost:3001/weather
-      let url = `${process.env.REACT_APP_SERVER}/weather?lat=${cityLat}&lon=${cityLong}`;
+      let url = `${process.env.REACT_APP_SERVER}/weather?lat=${cityLat}&lon=${cityLong}&days=10&units=I`;
 
       let weatherDataFromAxios = await axios.get(url);
       // console.log(weatherDataFromAxios.data);
@@ -93,28 +97,25 @@ class App extends React.Component {
 
   }
 
-  // handleGetWeather = async (e) => {
-  //   e.preventDefault();
+handleGetMovies = async (e) => {
+  try {
+    let url = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_MOVIEDB_API_KEY}&language=en-US&page=1&include_adult=false`
 
-  //   try {
+    let moviesDataFromAxios = await axios.get(url);
 
-  //     let url = `${ process.env.REACT_APP_SERVER }/weather?&city_name=${this.state.city}`;
-  //     let weatherDataFromAxios = await axios.get(url);
-  //     // console.log(weatherDataFromAxios.data);
+    this.setState({
+      moviesData: moviesDataFromAxios.data,
+      error: false,
+    })
 
-  //     this.setState({
-  //       weatherData: weatherDataFromAxios.data
-  //     },console.log(this.state.weatherData));
-      
-
-  //   } catch (error) {
-  //     console.log('HandleSubmit' + error.message);
-  //     this.setState({
-  //       error: true,
-  //       errorMessage: error.message
-  //     });
-  //   }
-  // }
+  } catch (error) {
+    console.log(error.message);
+    this.setState({
+      error: true,
+      errorMessage: error.message
+    })
+  }
+}
 
 
 
@@ -139,6 +140,7 @@ class App extends React.Component {
               <p>{this.state.cityData.lat}</p>
               <p>{this.state.cityData.lon}</p>
               <Weather description={this.state.weatherData} />
+              <Movies description={this.state.moviesData} />
               <Image className="img-fluid" src={`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${this.state.cityData.lat},${this.state.cityData.lon}&zoom=13`} alt='Map of selected location' />
             </ul>
         }

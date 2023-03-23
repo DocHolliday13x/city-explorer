@@ -5,7 +5,7 @@ import Form from 'react-bootstrap/Form';
 import Image from 'react-bootstrap/Image';
 import './App.css';
 import Weather from './Weather';
-import Movies from './Movies';
+// import Movies from './Movies';
 
 class App extends React.Component {
   constructor(props) {
@@ -13,8 +13,8 @@ class App extends React.Component {
     this.state = {
       cityData: {}, // this data comes from axios as an object
       city: '',
-      cityLat: '',
-      cityLong: '',
+      // cityLat: '',
+      // cityLong: '',
       weatherData: [],
       error: false,
       errorMessage: ''
@@ -32,7 +32,7 @@ class App extends React.Component {
   // ********** async/await - handle our asynchronous code **********
   // async is a labeler 
   getCityData = async (event) => {
-    // event.preventDefault();
+    event.preventDefault();
 
     // TODO: USE AXIOS TO GET LOCATION DATA FROM LOCATION IQ -  using city in state
     // try this
@@ -40,13 +40,17 @@ class App extends React.Component {
       let url = `https://us1.locationiq.com/v1/search?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.city}&format=json`
 
       let cityDataFromAxios = await axios.get(url);
-      // console.log(cityDataFromAxios.data[0]);
-
-      // TODO: SET THAT DATA THAT COMES BACK FROM AXIOS
+      console.log(cityDataFromAxios.data[0]);
       this.setState({
         cityData: cityDataFromAxios.data[0],
         error: false
       });
+
+      let lat = cityDataFromAxios.data[0].lat;
+      let lon = cityDataFromAxios.data[0].lon;
+      this.handleGetWeather(lat, lon);
+
+      // TODO: SET THAT DATA THAT COMES BACK FROM AXIOS
 
       // try fails so this takes place
     } catch (error) {
@@ -60,15 +64,15 @@ class App extends React.Component {
   }
 
 
-  handleGetWeather = async (e) => {
-    e.preventDefault();
+  handleGetWeather = async (cityLat, cityLong) => {
+    // e.preventDefault();
     // TODO: use axios to hit the api (backend)
     // TODO: set that info to state
 
     try {
-      this.getCityData();
+      // this.getCityData();
       // http://localhost:3001/weather
-      let url = `http://api.weatherbit.io/v2.0/forecast/daily?key=${REACT_APP_WEATHERBIT_API_KEY}&lat=${this.state.cityLat}>&lon=${this.state.cityLong}&days=10&units=I`;
+      let url = `${process.env.REACT_APP_SERVER}/weather?lat=${cityLat}&lon=${cityLong}`;
 
       let weatherDataFromAxios = await axios.get(url);
       // console.log(weatherDataFromAxios.data);
@@ -113,12 +117,14 @@ class App extends React.Component {
   // }
 
 
+
+
   render() {
     return (
       <>
         <h1>API Calls</h1>
 
-        <Form onSubmit={this.handleGetWeather}>
+        <Form onSubmit={this.getCityData}>
           <Form.Label>City Explorer</Form.Label>
           <Form.Control type="text" placeholder="Enter Location" onChange={this.handleCityInput} />
           <Button type="submit" variant="secondary">Explore!</Button>

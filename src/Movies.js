@@ -10,7 +10,7 @@ class Movies extends React.Component {
             <Container>
 
               <Carousel>
-                {this.props.movieData.map((movie, index) => {
+                {this.props.moviesData.map((movie, index) => {
                   return (
                     <Movie
                     movie={movie}

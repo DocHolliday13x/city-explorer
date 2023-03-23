@@ -29,8 +29,8 @@ class App extends React.Component {
       city: event.target.value
     })
   }
-  // ********** async/await - handle our asynchronous code **********
-  // async is a labeler 
+
+  // *** getCityData will get LocationIQ API info then pass it to the other APIs ***
   getCityData = async (event) => {
     event.preventDefault();
 
@@ -45,6 +45,7 @@ class App extends React.Component {
         error: false
       });
 
+      // *** bring in getWeatherData ***
       let lat = cityDataFromAxios.data[0].lat;
       let lon = cityDataFromAxios.data[0].lon;
       this.handleGetWeather(lat, lon);
@@ -52,10 +53,10 @@ class App extends React.Component {
       // *** bring in getMoviesData ***
       this.handleGetMovies();
 
-  
+
     } catch (error) {
       console.log('getCityData' + error.message);
-      
+
       this.setState({
         error: true,
         errorMessage: error.message
@@ -78,7 +79,7 @@ class App extends React.Component {
         weatherData: weatherDataFromAxios.data,
         error: false
       });
-      
+
 
     } catch (error) {
       console.log('handleGetWeather' + error.message);
@@ -89,17 +90,17 @@ class App extends React.Component {
     }
   };
 
-handleGetMovies = async () => {
-  try {
-    let url = `${process.env.REACT_APP_MOVIEDB_API_KEY}/movies?searchQuery=${this.state.city}`
+  handleGetMovies = async () => {
+    try {
+      let url = `${process.env.REACT_APP_SERVER}/movies?searchQuery=${this.state.city}`
 
-    let moviesDataFromAxios = await axios.get(url);
-    // console.log(moviesDataFromAxios.data);
+      let moviesDataFromAxios = await axios.get(url);
+      console.log(moviesDataFromAxios.data);
 
-    this.setState({
-      moviesData: moviesDataFromAxios.data,
-      error: false,
-    });
+      this.setState({
+        moviesData: moviesDataFromAxios.data,
+        error: false,
+      });
 
     } catch (error) {
       console.log('handleGetMovies' + error.message);
@@ -129,7 +130,7 @@ handleGetMovies = async () => {
             <ul>
               <h2>{this.state.cityData.display_name}</h2>
               <LocationCords
-              cityData={this.state.cityData}
+                cityData={this.state.cityData}
               />
               <Image className="img-fluid" src={`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${this.state.cityData.lat},${this.state.cityData.lon}&zoom=13`} alt='Map of selected location' />
               <Weather weatherData={this.state.weatherData} />

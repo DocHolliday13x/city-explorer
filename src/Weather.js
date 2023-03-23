@@ -8,7 +8,7 @@ class Weather extends React.Component {
       <div>
         {this.props.description.map((day, idx) => {
           return (
-            
+
             <Card key= {idx} style= {{ width: '18rem'}}>
               <Card.Body>
 

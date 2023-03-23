@@ -141,7 +141,7 @@ handleGetMovies = async () => {
               <p>{this.state.cityData.lat}</p>
               <p>{this.state.cityData.lon}</p>
               <Weather description={this.state.weatherData} />
-              <Movies description={this.state.moviesData} />
+              <Movies moviesData={this.state.moviesData} />
               <Image className="img-fluid" src={`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${this.state.cityData.lat},${this.state.cityData.lon}&zoom=13`} alt='Map of selected location' />
             </ul>
         }

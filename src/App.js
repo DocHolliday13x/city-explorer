@@ -4,7 +4,8 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Image from 'react-bootstrap/Image';
 import './App.css';
-import Weather from './Weather'
+import Weather from './Weather';
+import Movies from './Movies';
 
 class App extends React.Component {
   constructor(props) {
@@ -67,7 +68,7 @@ class App extends React.Component {
     try {
       this.getCityData();
       // http://localhost:3001/weather
-      let url = `${process.env.REACT_APP_SERVER}/weather?city_name=${this.state.city}`;
+      let url = `http://api.weatherbit.io/v2.0/forecast/daily?key=${REACT_APP_WEATHERBIT_API_KEY}&lat=${this.state.cityLat}>&lon=${this.state.cityLong}&days=10&units=I`;
 
       let weatherDataFromAxios = await axios.get(url);
       // console.log(weatherDataFromAxios.data);

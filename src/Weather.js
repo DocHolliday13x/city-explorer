@@ -1,27 +1,28 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card'
+import Weather2 from './Weather2';
 
 
 class Weather extends React.Component {
   render() {
     return (
-      <div>
-        {this.props.description.map((day, idx) => {
+      <section className='cards'>
+        {this.props.weatherData.map((day, index) => {
           return (
 
-            <Card key= {idx} style= {{ width: '18rem'}}>
-              <Card.Body>
+              <Card key={index} style={{ width: '18rem' }}>
+              
+                <Weather2
+                day={day}
+                idx={index}
+                />
 
-                <Card.Title>{day.date}</Card.Title>
-                <Card.Text>{day.description}</Card.Text>
+              </Card>
 
-              </Card.Body>
-
-            </Card>
           )
         })}
 
-      </div>
+      </section>
     )
   }
 }

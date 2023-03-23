@@ -1,29 +1,27 @@
 import React from 'react';
-import Card from 'react-bootstrap/Card'
-import Movie from './Movie';
+import Container from 'react-bootstrap/Container'
+import Carousel from 'react-bootstrap/Carousel';
+import Movie from './Movies2';
 
 class Movies extends React.Component {
   render() {
     return (
-      <div>
-        {this.props.moviesData.map(movie => {<Movie movie={movie}/>}
-          return (
 
-            <Card key= {index} style= {{ width: '18rem'}}>
-              <Card.Img variant="top" src={city.poster_path} />
-              <Card.Body>
+            <Container>
 
-                <Card.Title>{city.title}</Card.Title>
-                <Card.Text>{city.overview}</Card.Text>
+              <Carousel>
+                {this.props.moviesData.map((movie, index) => {
+                  return (
+                    <Movie
+                    movie={movie}
+                    index={index}
+                    />
+                  )
+                })}
+              </Carousel>
+              
+            </Container>
 
-              </Card.Body>
-
-            </Card>
-
-          )
-        })}
-
-      </div>
     )
   }
 }

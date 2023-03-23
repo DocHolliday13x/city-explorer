@@ -38,6 +38,6 @@ img {
   justify-content: center;
   display: block !important;
   border-radius: 10%;
-  border-style: dotted;
+  border-style: solid;
   border-color: #12b2da;
 }

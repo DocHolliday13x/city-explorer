@@ -21,14 +21,29 @@ Today I will be creating the react application in which I will be building this 
 * Finish Time: 1922 
 * Actual Time to Completion: 6 hours
 
+## Lab 09
+
+Today's goal is to refactor the front and back end of my application. I don't know if refactoring will make it run smoother, but it sure cleaned up my code nicely. Everything is more readable.
+
+* Link to Trello Board: https://trello.com/b/YJhepSUm/city-explorer
+* Name of Feature: Refactor - Modularize the back-end codebase.
+* Estimate of Time Needed to Complete: 15 hours
+* Start Time: 23 MAR 2023 1130
+* Finish Time: 23 MAR 2023 1700
+* Actual Time to Completion: < 6 hrs
+
 ## Getting Started
 
 ## Architecture
 
 ## Change Log
 
-20 March 2023 1400 - Initial Setup Commenced.
-20 March 2023 1922 - Lab 06 Completed
+21 March 2023 1400 - Initial Setup Commenced
+22 March 2023 1630 - Lab 07 Submitted (incomplete)
+22 March 2023 1630 - Lab 08 Commenced
+22 March 2023 0000 - Lab 08 Submitted (incomplete)
+23 March 2023 1130 - Lab 09 Commenced
+23 March 2023 1700 - Lab 09 Completed
 
 ## Credit and Collaborations
 
